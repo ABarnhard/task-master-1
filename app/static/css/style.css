@@ -1,0 +1,16 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+*{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
+
+#priorities{
+  border: 1px solid #aaaaaa;
+}
+
+#priorities td{
+  border: 1px solid #cccccc;
+  padding: 10px;
+}
+
