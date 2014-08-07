@@ -83,5 +83,66 @@ describe('Task', function(){
       });
     });
   });
+
+  describe('.query', function(){
+    it('should show top 3 tasks', function(done){
+      Task.query({}, function(err, tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].priority.name).to.be.ok;
+        done();
+      });
+    });
+
+    it('should show filtered tasks - by tag', function(done){
+      Task.query({tag:'g'}, function(err, tasks){
+        expect(tasks).to.have.length(2);
+        var isOk0 = tasks[0].tags.some(function(t){return t === 'g';});
+        var isOk1 = tasks[1].tags.some(function(t){return t === 'g';});
+        expect(isOk0).to.be.true;
+        expect(isOk1).to.be.true;
+        done();
+      });
+    });
+
+    it('should show page 2', function(done){
+      Task.query({page:2}, function(err, tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].name).to.equal('Vinegar');
+        done();
+      });
+    });
+
+    it('should sort by due date - ascending', function(done){
+      Task.query({sort:'due', direction:'1'}, function(err, tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].name).to.equal('Bills');
+        done();
+      });
+    });
+
+    it('should sort by due date - descending', function(done){
+      Task.query({sort:'due', direction:'-1'}, function(err, tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].name).to.equal('Party');
+        done();
+      });
+    });
+
+    it('should sort by complete - ascending', function(done){
+      Task.query({sort:'isComplete', direction:'1'}, function(err, tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].name).to.equal('Milk');
+        done();
+      });
+    });
+
+    it('should sort by complete - descending', function(done){
+      Task.query({sort:'isComplete', direction:'-1'}, function(err, tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].name).to.equal('Gas');
+        done();
+      });
+    });
+  });
 });
 

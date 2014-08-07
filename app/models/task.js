@@ -1,7 +1,9 @@
 'use strict';
 
-var Mongo = require('mongodb');
-var _     = require('lodash');
+var Mongo    = require('mongodb');
+var _        = require('lodash');
+var async    = require('async');
+var Priority = require('./priority');
 
 function Task(o){
   this.name       = o.name;
@@ -28,16 +30,34 @@ Task.create = function(o, cb){
 
 Task.findById = function(id, cb){
   var _id = Mongo.ObjectID(id);
-
   Task.collection.findOne({_id:_id}, function(err, obj){
     var task = changePrototype(obj);
     cb(task);
   });
 };
 
+Task.query = function(query, cb){
+  var limit  = 3;
+  var skip   = query.page ? ((query.page * limit) - limit)     : 0;
+  var filter = query.tag  ? {tags:query.tag}                   : {};
+  var sort   = {};
+  if(query.sort){sort[query.sort] = query.direction * 1;}
+
+  Task.collection.find(filter).sort(sort).skip(skip).limit(limit).toArray(function(err, tasks){
+    async.map(tasks, iterator, cb);
+  });
+};
+
 module.exports = Task;
 
 // PRIVATE FUNCTIONS ///
+
+function iterator(task, cb){
+  Priority.findById(task.priorityId, function(err, priority){
+    task.priority = priority;
+    cb(null, task);
+  });
+}
 
 function changePrototype(obj){
   return _.create(Task.prototype, obj);

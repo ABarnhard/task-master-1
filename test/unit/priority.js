@@ -52,9 +52,8 @@ describe('Priority', function(){
 
   describe('.all', function(){
     it('should get all priorities from database', function(done){
-      Priority.all(function(priorities){
+      Priority.all(function(err, priorities){
         expect(priorities).to.have.length(1);
-        expect(priorities[0]).to.be.instanceof(Priority);
         done();
       });
     });
@@ -62,17 +61,15 @@ describe('Priority', function(){
 
   describe('.findById', function(){
     it('should find a priority by its id - as string', function(done){
-      Priority.findById(medium._id.toString(), function(priority){
+      Priority.findById(medium._id.toString(), function(err, priority){
         expect(priority.name).to.equal('Medium');
-        expect(priority).to.be.instanceof(Priority);
         done();
       });
     });
 
     it('should find a priority by its id - as object id', function(done){
-      Priority.findById(medium._id, function(priority){
+      Priority.findById(medium._id, function(err, priority){
         expect(priority.name).to.equal('Medium');
-        expect(priority).to.be.instanceof(Priority);
         done();
       });
     });

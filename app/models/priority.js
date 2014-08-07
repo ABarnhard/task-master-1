@@ -1,7 +1,6 @@
 'use strict';
 
 var Mongo = require('mongodb');
-var _     = require('lodash');
 
 function Priority(o){
   this.name  = o.name;
@@ -19,26 +18,13 @@ Priority.create = function(o, cb){
 };
 
 Priority.all = function(cb){
-  Priority.collection.find().toArray(function(err, objects){
-    var priorities = objects.map(function(o){return changePrototype(o);});
-    cb(priorities);
-  });
+  Priority.collection.find().toArray(cb);
 };
 
 Priority.findById = function(id, cb){
   var _id = Mongo.ObjectID(id);
-
-  Priority.collection.findOne({_id:_id}, function(err, obj){
-    var priority = changePrototype(obj);
-    cb(priority);
-  });
+  Priority.collection.findOne({_id:_id}, cb);
 };
 
 module.exports = Priority;
-
-// PRIVATE FUNCTIONS ///
-
-function changePrototype(obj){
-  return _.create(Priority.prototype, obj);
-}
 
