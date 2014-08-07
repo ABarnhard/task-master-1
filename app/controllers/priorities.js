@@ -13,7 +13,7 @@ exports.create = function(req, res){
 };
 
 exports.index = function(req, res){
-  Priority.all(function(priorities){
+  Priority.all(function(err, priorities){
     res.render('priorities/index', {priorities:priorities});
   });
 };

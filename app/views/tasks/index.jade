@@ -1,0 +1,29 @@
+extends ../shared/template
+block content
+  h2 Task List
+
+  table#tasks
+    thead
+      tr
+        th Name
+        th!= taskHelper.sort(query, 'due', 'Due')
+        th Photo
+        th!= taskHelper.sort(query, 'isComplete', 'Complete?')
+        th Tags
+        th Priority
+    tbody
+      each task in tasks
+        tr(style='background-color:#{task.priority.color}')
+          td= task.name
+          td= moment(task.due).format('dddd, MMM Do YYYY')
+          td: img(src=task.photo)
+          td
+            form(method='post', action='/tasks/#{task._id}')
+              input(type='hidden', name='_method', value='put')
+              input(type='checkbox', checked=task.isComplete)
+              button Toggle
+          td!= taskHelper.tags(query, task.tags)
+          td= task.priority.name
+
+  #pager
+    != taskHelper.pager(query, count)

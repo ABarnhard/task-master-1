@@ -1,0 +1,13 @@
+extends ../shared/template
+block content
+  h2 Create Task
+  form(method='post', action='/tasks')
+    input(name='name', type='text', placeholder='Pickup Laundry', autofocus=true)
+    input(name='due', type='date')
+    input(name='photo', type='text', placeholder='http://image.com/laundry.jpg')
+    input(name='tags', type='text', placeholder='home, work, clean')
+    select(name='priorityId')
+      each priority in priorities
+        option(value=priority._id)= priority.name
+    button Add Task
+

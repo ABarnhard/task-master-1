@@ -23,6 +23,11 @@ Task.prototype.toggle = function(cb){
   Task.collection.save(this, cb);
 };
 
+Task.count = function(query, cb){
+  var filter = query.tag  ? {tags:query.tag} : {};
+  Task.collection.find(filter).count(cb);
+};
+
 Task.create = function(o, cb){
   var t = new Task(o);
   Task.collection.save(t, cb);

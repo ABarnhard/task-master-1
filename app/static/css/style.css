@@ -5,12 +5,44 @@
   font-size: 12px;
 }
 
-#priorities{
+#priorities, #tasks{
+  width: 100%;
   border: 1px solid #aaaaaa;
 }
 
-#priorities td{
+#priorities td, #tasks, td{
   border: 1px solid #cccccc;
   padding: 10px;
+}
+
+img{
+  width: 25px;
+  height: 25px;
+  border: 1px solid #111111;
+}
+
+#pager{
+  margin-top: 20px;
+  padding: 5px;
+  background-color: #aaaaaa;
+  border: 1px solid #111111;
+}
+
+a{
+  color: #001F3F;
+  text-decoration: none;
+  border: 1px solid #111111;
+  padding: 3px;
+  display: inline-block;
+  margin: 0px 3px 0px 3px;
+}
+
+a:hover{
+  background-color: #0074D9;
+  color: #111111;
+}
+
+ul li{
+  display: inline-block;
 }
 
