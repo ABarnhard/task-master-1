@@ -3,10 +3,10 @@
 
 'use strict';
 
-var expect = require('chai').expect;
-var Priority = require('../../app/models/priority');
+var expect    = require('chai').expect;
+var Priority  = require('../../app/models/priority');
 var dbConnect = require('../../app/lib/mongodb');
-var Mongo = require('mongodb');
+var Mongo     = require('mongodb');
 
 var medium;
 
